@@ -40,4 +40,4 @@ out/
 .DS_Store
 
 ### For Security ###
-src/main/resources/application.properties
+application-secure.properties
