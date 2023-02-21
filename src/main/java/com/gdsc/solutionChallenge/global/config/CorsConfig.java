@@ -15,6 +15,7 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
 //                .allowedOrigins("https://gdsc-timetable.vercel.app", "http://localhost:5173") 생략시 *
+                .allowedOriginPatterns("*")
 //                .exposedHeaders(jwtHeader)
                 .allowedMethods("*")
                 .allowCredentials(true);
