@@ -1,4 +1,4 @@
-package com.gdsc.solutionChallenge.controller;
+package com.gdsc.solutionChallenge.member.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
