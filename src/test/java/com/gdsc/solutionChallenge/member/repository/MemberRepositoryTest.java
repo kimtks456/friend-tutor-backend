@@ -37,7 +37,6 @@ class MemberRepositoryTest {
                 .email("sdlkfsl@sdflsdkfj.dfm")
                 .nickName("test")
                 .grade(1)
-                .role(Role.USER)
                 .build();
 
         // when
@@ -58,8 +57,8 @@ class MemberRepositoryTest {
                 .email("sdlkfsl@sdflsdkfj.dfm")
                 .nickName("test")
                 .grade(1)
-                .role(Role.USER)
                 .build();
+        member.addUserAuthority();
 
         // when, then
         assertThrows(Exception.class, () -> memberRepository.save(member));
@@ -74,7 +73,6 @@ class MemberRepositoryTest {
                 .email("sdlkfslsdflsㄴkfjdfm") // @ 있어야함.
                 .nickName("test")
                 .grade(1)
-                .role(Role.USER)
                 .build();
 
         // when, then
@@ -90,7 +88,6 @@ class MemberRepositoryTest {
                 .email("sdlkfslsdfl@ㄴkfjdfm") // @ 있어야함.
                 .nickName("test")
                 .grade(1)
-                .role(Role.USER)
                 .build();
         Member member2 = Member.builder()
                 .username("hello")
@@ -98,7 +95,6 @@ class MemberRepositoryTest {
                 .email("sdlkfslsdf@sㄴkfjdfm") // @ 있어야함.
                 .nickName("test")
                 .grade(1)
-                .role(Role.USER)
                 .build();
 
         memberRepository.save(member1);
@@ -117,7 +113,6 @@ class MemberRepositoryTest {
                 .email("sdlkfslsdfl@ㄴkfjdfm") // @ 있어야함.
                 .nickName("test")
                 .grade(1)
-                .role(Role.USER)
                 .build();
 
         memberRepository.save(member);
@@ -139,7 +134,6 @@ class MemberRepositoryTest {
                 .email("sdlkfslsdfl@ㄴkfjdfm") // @ 있어야함.
                 .nickName("test")
                 .grade(1)
-                .role(Role.USER)
                 .build();
 
         memberRepository.save(member);

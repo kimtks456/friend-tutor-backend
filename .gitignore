@@ -38,3 +38,6 @@ out/
 
 ### macOS ###
 .DS_Store
+
+### For Security ###
+src/main/resources/application.properties

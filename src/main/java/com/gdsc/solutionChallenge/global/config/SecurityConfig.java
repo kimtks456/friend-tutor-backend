@@ -16,16 +16,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-//    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     private static final String[] PERMIT_URL_ARRAY = {
             "/user/login",
             "/user/signup",
             "/user",
-            "/apidocs",
             /* swagger v3 */
             "/v3/api-docs/**",
-            "/swagger-ui/**"
+            "/swagger-ui/**",
+            "/apidocs",
     };
 
 
@@ -42,9 +42,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(PERMIT_URL_ARRAY).permitAll() ///swagger-ui/index.html
                 .requestMatchers("/old/**", "/new/**").hasRole("USER")
-                .anyRequest().authenticated();
-//                .and()
-//                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

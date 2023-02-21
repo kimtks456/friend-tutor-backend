@@ -8,15 +8,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
-//    @Value("${jwt.response.header}")
-//    private String jwtHeader;
+    @Value("${jwt.header}")
+    private String jwtHeader;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
 //                .allowedOrigins("https://gdsc-timetable.vercel.app", "http://localhost:5173") 생략시 *
                 .allowedOriginPatterns("*")
-//                .exposedHeaders(jwtHeader)
+                .exposedHeaders(jwtHeader)
                 .allowedMethods("*")
                 .allowCredentials(true);
     }
