@@ -46,7 +46,8 @@ public class MemberService {
     public String signup(SignUpDto signUpDto) throws Exception {
         Member member = signUpDto.toEntity();
         member.addUserAuthority();
-        member.encodePassword(passwordEncoder);
+        // FE에서 암호화해서 보내주기로 함
+//        member.encodePassword(passwordEncoder);
 
         if(memberRepository.findByUsername(signUpDto.username()).isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
