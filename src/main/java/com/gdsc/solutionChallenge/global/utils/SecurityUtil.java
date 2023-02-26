@@ -11,11 +11,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 //    }
 //}
 public class SecurityUtil {
-    public static long getLoginUsername() {
+    public static String getLoginUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return Long.parseLong(userDetails.getUsername());
+            return userDetails.getUsername();
         }
         throw new IllegalStateException("User not authenticated");
     }
