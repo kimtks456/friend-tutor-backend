@@ -8,6 +8,7 @@ import com.gdsc.solutionChallenge.member.entity.Member;
 import com.gdsc.solutionChallenge.member.repository.MemberRepository;
 import io.swagger.v3.oas.annotations.servers.Server;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 @Transactional(readOnly = false)
 @RequiredArgsConstructor
 public class MemberService {
@@ -46,8 +48,8 @@ public class MemberService {
     public String signup(SignUpDto signUpDto) throws Exception {
         Member member = signUpDto.toEntity();
         member.addUserAuthority();
-        // FE에서 암호화해서 보내주기로 함
-//        member.encodePassword(passwordEncoder);
+
+        member.encodePassword(passwordEncoder);
 
         if(memberRepository.findByUsername(signUpDto.username()).isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
@@ -58,7 +60,8 @@ public class MemberService {
     }
 
     public String withdraw(String checkPassword) throws Exception {
-        Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(
+        log.info("WITHDRAW : " + SecurityUtil.getLoginUsername());
+        Member member = memberRepository.findById(SecurityUtil.getLoginUsername()).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 아이디입니다."));
 
         if (!member.matchPassword(passwordEncoder, checkPassword)) {

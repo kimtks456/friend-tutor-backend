@@ -52,6 +52,7 @@ public class JwtTokenProvider {
 
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + expiredTime);
+        log.info("ACCESS_TOKEN_EXPIRES_IN : " + accessTokenExpiresIn.toString());
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
