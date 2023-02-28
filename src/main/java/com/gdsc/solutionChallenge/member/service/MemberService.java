@@ -45,7 +45,7 @@ public class MemberService {
         return tokenInfo;
     }
 
-    public String signup(SignUpDto signUpDto) throws Exception {
+    public String signup(SignUpDto signUpDto) {
         Member member = signUpDto.toEntity();
         member.addUserAuthority();
 

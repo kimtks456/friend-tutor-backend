@@ -1,5 +1,7 @@
 package com.gdsc.solutionChallenge.member.controller;
 
+import static com.gdsc.solutionChallenge.global.utils.JwtUtil.getUsernameFromToken;
+
 import com.gdsc.solutionChallenge.global.exception.ResponseForm;
 import com.gdsc.solutionChallenge.global.exception.UserException;
 import com.gdsc.solutionChallenge.member.dto.LoginDto;
@@ -73,9 +75,12 @@ public class MemberController {
 
     @PostMapping("/login")
     public TokenInfo login(@Valid @RequestBody LoginDto loginDto) {
-        String username = loginDto.username();
-        String password = loginDto.password();
-        TokenInfo tokenInfo = memberService.login(username, password);
+        TokenInfo tokenInfo;
+        try {
+            tokenInfo = memberService.login(loginDto.username(), loginDto.password());
+        } catch (Exception e) {
+            throw new UserException(e.getMessage());
+        }
         return tokenInfo;
     }
 
