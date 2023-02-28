@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "Default 성공, 실패 response body")
 public class ResponseForm {
     @Schema(description = "response 보내는 시각", example = "2023-02-28 02:40:12.767")
     private String time;

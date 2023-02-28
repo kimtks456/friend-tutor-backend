@@ -54,7 +54,7 @@ public class MemberController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원가입 성공 : 해당 username을 details에 담아 보냅니다.", content = @Content(schema = @Schema(implementation = ResponseForm.class))),
             @ApiResponse(responseCode = "406", description = "회원가입 실패 : 회원가입 request body 제약조건 확인", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
-    public ResponseEntity<?> signup(@Valid @RequestBody SignUpDto signUpDto) throws Exception {
+    public ResponseEntity<?> signup(@Valid @RequestBody SignUpDto signUpDto) {
         String username;
         try {
             username = memberService.signup(signUpDto);
@@ -86,7 +86,10 @@ public class MemberController {
     }
 
     @DeleteMapping
-    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "회원 탈퇴", description = "accessToken, PW로 회원탈퇴 합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "회원탈퇴 성공 : 탈퇴한 username을 details에 담아 보냅니다.", content = @Content(schema = @Schema(implementation = ResponseForm.class))),
+            @ApiResponse(responseCode = "406", description = "회원탈퇴 실패 : accessToken or PW 틀린 경우", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
     public ResponseEntity<?> withdraw(@Valid @RequestBody WithdrawDto withdrawDto) {
         String deletedUsername;
 
