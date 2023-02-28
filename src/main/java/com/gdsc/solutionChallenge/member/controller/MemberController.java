@@ -7,6 +7,15 @@ import com.gdsc.solutionChallenge.member.dto.SignUpDto;
 import com.gdsc.solutionChallenge.member.dto.TokenInfo;
 import com.gdsc.solutionChallenge.member.dto.WithdrawDto;
 import com.gdsc.solutionChallenge.member.service.MemberService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,8 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 
+@Tag(name = "사용자 인증", description = "회원가입, 로그인, 탈퇴")
 @RestController
 @Slf4j
 @RequestMapping(path = "/user", produces = "application/json;charset=UTF-8")
@@ -43,12 +51,16 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
+    @Operation(summary = "회원가입", description = "ID, PW로 회원가입을 합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "회원가입 성공", content = @Content(schema = @Schema(implementation = ResponseForm.class))),
+            @ApiResponse(responseCode = "406", description = "제약조건 지키지 않아, 회원가입 실패", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
     public ResponseEntity<?> signup(@Valid @RequestBody SignUpDto signUpDto) throws Exception {
         String username;
         try {
             username = memberService.signup(signUpDto);
         } catch (Exception e) {
-            throw new UserException();
+            throw new UserException(e.getMessage());
         }
 
         ResponseForm responseForm = ResponseForm.builder()

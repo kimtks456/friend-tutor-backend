@@ -19,7 +19,6 @@ public class OpenApiConfig {
                 .termsOfService("http://swagger.io/terms/")
                 .contact(new Contact().name("San Kim").url("https://github.com/kimtks456/").email("kimtks456@gmail.com"));
 //                .license(new License().name("Apache License Version 2.0").url("http://www.apache.org/licenses/LICENSE-2.0"));
-
         return new OpenAPI()
                 .components(new Components())
                 .info(info);
