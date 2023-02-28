@@ -60,7 +60,6 @@ public class MemberService {
     }
 
     public String withdraw(String checkPassword) throws Exception {
-        log.info("WITHDRAW : " + SecurityUtil.getLoginUsername());
         Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 아이디입니다."));
 
