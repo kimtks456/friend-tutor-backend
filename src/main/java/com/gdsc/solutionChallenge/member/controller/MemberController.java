@@ -87,8 +87,19 @@ public class MemberController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public String withdraw(@Valid @RequestBody WithdrawDto withdrawDto) throws Exception {
-        String deletedUsername = memberService.withdraw(withdrawDto.checkPassword());
-        return deletedUsername;
+    public ResponseEntity<?> withdraw(@Valid @RequestBody WithdrawDto withdrawDto) {
+        String deletedUsername;
+
+        try {
+            deletedUsername = memberService.withdraw(withdrawDto.checkPassword());
+        } catch (Exception e) {
+            throw new UserException(e.getMessage());
+        }
+        ResponseForm responseForm = ResponseForm.builder()
+                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")))
+                .message("회원탈퇴 성공")
+                .details(deletedUsername)
+                .build();
+        return new ResponseEntity<>(responseForm, HttpStatus.OK);
     }
 }
