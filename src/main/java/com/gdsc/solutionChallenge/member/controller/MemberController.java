@@ -39,24 +39,21 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequestMapping(path = "/user", produces = "application/json;charset=UTF-8")
 public class MemberController {
-
-//    @ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE, reason = "Invlaid inputs")
-//    public class DirectoryNotFoundException extends RuntimeException {
-//    }
-
     @Autowired
     private MemberService memberService;
 
+
     @GetMapping
+    @Operation(summary = "BE 연결 테스트", description = "정상적으로 BE와 연결되면, '성공' 이라는 String 반환")
     public String test() {
-        return "test";
+        return "성공";
     }
 
     @PostMapping("/signup")
-    @Operation(summary = "회원가입", description = "ID, PW로 회원가입을 합니다.")
+    @Operation(summary = "회원가입", description = "회원가입을 합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원가입 성공", content = @Content(schema = @Schema(implementation = ResponseForm.class))),
-            @ApiResponse(responseCode = "406", description = "제약조건 지키지 않아, 회원가입 실패", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
+            @ApiResponse(responseCode = "406", description = "회원가입 실패 : 회원가입 request body 제약조건 확인", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
     public ResponseEntity<?> signup(@Valid @RequestBody SignUpDto signUpDto) throws Exception {
         String username;
         try {
@@ -74,6 +71,10 @@ public class MemberController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "로그인", description = "ID, PW로 로그인 합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "로그인 성공", content = @Content(schema = @Schema(implementation = TokenInfo.class))),
+            @ApiResponse(responseCode = "406", description = "로그인 실패 : ID or PW 틀린 경우", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
     public TokenInfo login(@Valid @RequestBody LoginDto loginDto) {
         TokenInfo tokenInfo;
         try {
