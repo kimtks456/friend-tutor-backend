@@ -29,7 +29,7 @@ public record SignUpDto (
                         .nickName(nickName)
                         .grade(grade)
                         .email(email)
+                        .score(0)
                         .build();
         }
-
 }
