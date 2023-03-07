@@ -1,14 +1,14 @@
 package com.gdsc.solutionChallenge.member.entity;
 
+import com.gdsc.solutionChallenge.posts.entity.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -70,6 +70,24 @@ public class Member extends BaseTimeEntity implements UserDetails {
 
     @Column
     private Integer score;
+
+    @Builder.Default
+    // 연관관계의 owner가 아니므로, read만 가능하게 단방향 하나 더 추가해서 양방향으로 만듦.
+    @OneToMany(mappedBy = "writer") // child class에서 선언한 Parent class의 변수명
+    private List<Post> postList = new ArrayList<>();
+
+
+
+
+
+    //== 연관관계 메서드 ==//
+    public void addCourse(Post post){
+        postList.add(post);
+    }
+
+    public void addScore(Integer score){
+        this.score += score;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
