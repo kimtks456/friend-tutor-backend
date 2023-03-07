@@ -38,4 +38,14 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
         return new ResponseEntity<>(responseForm, HttpStatus.NOT_ACCEPTABLE);
     }
+
+    @ExceptionHandler(PostException.class)
+    public final ResponseEntity<Object> handlePostException(Exception ex) {
+        ResponseForm responseForm = ResponseForm.builder()
+                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")))
+                .message("Post logic 관련 예외가 발생했습니다.")
+                .details(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(responseForm, HttpStatus.NOT_ACCEPTABLE);
+    }
 }

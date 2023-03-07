@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
-@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -55,6 +54,16 @@ public class Post extends BaseTimeEntity {
     @Column(name = "likes")
     private Integer likes;
 
+    @Builder
+    public Post(Integer grade, String subject, String title, String description, String drive_link, String video_link, Integer likes) {
+        this.grade = grade;
+        this.subject = subject;
+        this.title = title;
+        this.description = description;
+        this.drive_link = drive_link;
+        this.video_link = video_link;
+        this.likes = likes;
+    }
 
 
 
