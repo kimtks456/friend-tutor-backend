@@ -56,17 +56,16 @@ public class PostController {
         return new ResponseEntity<>(responseForm, HttpStatus.OK);
     }
 
-    @GetMapping("/all")
-    @Operation(summary = "모든 게시글 조회", description = "모든 게시글을 조회합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "모든 게시글 조회 성공 : 모든 게시글을 배열에 담아 보냅니다.", content = @Content(schema = @Schema(implementation = ResponseForm.class))),
-            @ApiResponse(responseCode = "406", description = "모든 게시글 조회 실패 : 게시글이 하나도 없습니다.", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
-    public List<Post> getAllPosts() {
-        List<Post> result = postService.getAllPosts();
-        if (result.isEmpty()) {
-            throw new PostException("게시글이 하나도 없습니다.");
-        }
-        return result;
-    }
-
+//    @GetMapping("/all")
+//    @Operation(summary = "모든 게시글 조회", description = "모든 게시글을 조회합니다.")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "모든 게시글 조회 성공 : 모든 게시글을 배열에 담아 보냅니다.", content = @Content(schema = @Schema(implementation = ResponseForm.class))),
+//            @ApiResponse(responseCode = "406", description = "모든 게시글 조회 실패 : 게시글이 하나도 없습니다.", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
+//    public List<Post> getAllPosts() {
+//        List<Post> result = postService.getAllPosts();
+//        if (result.isEmpty()) {
+//            throw new PostException("게시글이 하나도 없습니다.");
+//        }
+//        return result;
+//    }
 }

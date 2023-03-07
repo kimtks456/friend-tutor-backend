@@ -2,6 +2,7 @@ package com.gdsc.solutionChallenge.posts.service;
 
 
 import com.gdsc.solutionChallenge.global.utils.SecurityUtil;
+import com.gdsc.solutionChallenge.member.entity.Member;
 import com.gdsc.solutionChallenge.member.repository.MemberRepository;
 import com.gdsc.solutionChallenge.posts.dto.PostSaveDto;
 import com.gdsc.solutionChallenge.posts.entity.Post;
@@ -26,8 +27,11 @@ public class PostService {
         post.confirmWriter(memberRepository.findByUsername(SecurityUtil.getLoginUsername())
                 .orElseThrow(() -> new IllegalArgumentException("로그인된 사용자가 DB에 없습니다.")));
 
-
         Post savedPost = postRepository.save(post);
+        Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).get();
+        member.addScore(10);
+        memberRepository.save(member);
+
         return savedPost.getTitle();
     }
 
