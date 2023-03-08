@@ -47,6 +47,11 @@ public class PostService {
 
     public List<FullPost> getAllPosts() {
         List<Post> posts = postRepository.findAll();
+
+        if (posts.isEmpty()) {
+            throw new IllegalArgumentException("게시글이 하나도 없습니다.");
+        }
+
         List<FullPost> fullPostList = new ArrayList<>();
         for (Post post : posts) {
             fullPostList.add(FullPost.builder()
@@ -78,6 +83,17 @@ public class PostService {
                 .drive_link(post.getDrive_link())
                 .likes(post.getLikes())
                 .created_at(post.getCreatedDate().toString())
+                .build();
+    }
+
+    public SummPost getTopTrendingSummPost(Integer grade) {
+        Post post = postRepository.findTop1ByGradeOrderByLikesDesc(grade).orElseThrow(() -> new IllegalArgumentException("해당 학년의 게시글이 없습니다."));
+        return SummPost.builder()
+                .course_id(post.getId())
+                .writer(post.getWriter().getNickName())
+                .title(post.getTitle())
+                .video_id(post.getVideo_id())
+                .likes(post.getLikes())
                 .build();
     }
 }
