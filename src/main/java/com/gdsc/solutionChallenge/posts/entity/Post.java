@@ -1,5 +1,6 @@
 package com.gdsc.solutionChallenge.posts.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gdsc.solutionChallenge.member.entity.BaseTimeEntity;
 import com.gdsc.solutionChallenge.member.entity.Member;
 import jakarta.persistence.Column;
@@ -29,6 +30,7 @@ public class Post extends BaseTimeEntity {
     @Column(name = "course_id", nullable = false)
     private Long id;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id")
     private Member writer;

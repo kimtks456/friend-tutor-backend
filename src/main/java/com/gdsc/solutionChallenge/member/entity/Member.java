@@ -1,5 +1,6 @@
 package com.gdsc.solutionChallenge.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gdsc.solutionChallenge.posts.entity.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -65,12 +66,13 @@ public class Member extends BaseTimeEntity implements UserDetails {
     private String email;
 
     @ElementCollection(fetch = FetchType.EAGER) // 1:M 에서는 M을 필요시점에 가져올 수 있는데 바로가져오기.
-    @Builder.Default
+    @Builder.Default // 객체를 원하는 값으로 initialize해서 받을 수 있음.
     private List<String> roles = new ArrayList<>();
 
     @Column
     private Integer score;
 
+    @JsonManagedReference
     @Builder.Default
     // 연관관계의 owner가 아니므로, read만 가능하게 단방향 하나 더 추가해서 양방향으로 만듦.
     @OneToMany(mappedBy = "writer") // child class에서 선언한 Parent class의 변수명
