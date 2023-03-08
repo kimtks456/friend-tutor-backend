@@ -50,20 +50,20 @@ public class Post extends BaseTimeEntity {
     @Column(name = "drive_link")
     private String drive_link;
 
-    @Column(name = "video_link")
-    private String video_link;
+    @Column(name = "video_id")
+    private String video_id;
 
     @Column(name = "likes")
     private Integer likes;
 
     @Builder
-    public Post(Integer grade, String subject, String title, String description, String drive_link, String video_link, Integer likes) {
+    public Post(Integer grade, String subject, String title, String description, String drive_link, String video_id, Integer likes) {
         this.grade = grade;
         this.subject = subject;
         this.title = title;
         this.description = description;
         this.drive_link = drive_link;
-        this.video_link = video_link;
+        this.video_id = video_id;
         this.likes = likes;
     }
 

@@ -27,7 +27,7 @@ public record PostSaveDto(
                 .title(title)
                 .description(description)
                 .drive_link(drive_link)
-                .video_link(extractVideoId(video_link))
+                .video_id(extractVideoId(video_link))
                 .likes(0)
                 .grade(grade)
                 .subject(subject)

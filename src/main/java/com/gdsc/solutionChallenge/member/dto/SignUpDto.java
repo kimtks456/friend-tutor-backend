@@ -12,7 +12,7 @@ public record SignUpDto (
         @NotBlank(message = "아이디를 입력해주세요.") String username,
         @Schema(description = "비밀번호", example = "1234")
         @NotBlank(message = "비밀번호를 입력해주세요.") String password,
-        @Schema(description = "실명", example = "홍길동 or null or blank")
+        @Schema(description = "실명(인증서에 나옴)", example = "홍길동 or null or blank")
         String name,
         @Schema(description = "닉네임", example = "산E")
         @NotBlank(message = "닉네임을 입력해주세요.") String nickName,

@@ -4,6 +4,8 @@ package com.gdsc.solutionChallenge.posts.controller;
 import com.gdsc.solutionChallenge.global.exception.PostException;
 import com.gdsc.solutionChallenge.global.exception.ResponseForm;
 import com.gdsc.solutionChallenge.posts.dto.req.PostSaveDto;
+import com.gdsc.solutionChallenge.posts.dto.res.FindAllRes;
+import com.gdsc.solutionChallenge.posts.dto.res.FullPost;
 import com.gdsc.solutionChallenge.posts.entity.Post;
 import com.gdsc.solutionChallenge.posts.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "게시물", description = "게시글 생성, 조회, 삭제")
 @RestController
 @Slf4j
-@RequestMapping(path = "/post", produces = "application/json;charset=UTF-8")
+@RequestMapping(path = "/course", produces = "application/json;charset=UTF-8")
 public class PostController {
     @Autowired
     private PostService postService;
@@ -59,13 +61,19 @@ public class PostController {
     @GetMapping("/all")
     @Operation(summary = "[TEST] 모든 게시글 조회", description = "모든 게시글을 조회합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "모든 게시글 조회 성공 : 모든 게시글을 배열에 담아 보냅니다.", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Post.class)))),
+            @ApiResponse(responseCode = "200", description = "모든 게시글 조회 성공 : 모든 게시글을 배열에 담아 보냅니다.", content = @Content(schema = @Schema(implementation = FindAllRes.class))),
             @ApiResponse(responseCode = "406", description = "모든 게시글 조회 실패 : 게시글이 하나도 없습니다.", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
-    public List<Post> getAllPosts() {
-        List<Post> result = postService.getAllPosts();
+    public ResponseEntity<?> getAllPosts() {
+        List<FullPost> result = postService.getAllPosts();
         if (result.isEmpty()) {
             throw new PostException("게시글이 하나도 없습니다.");
         }
-        return result;
+
+        FindAllRes findAllRes = FindAllRes.builder()
+                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .message("모든 게시글 조회 성공")
+                .details(result)
+                .build();
+        return new ResponseEntity<>(findAllRes, HttpStatus.OK);
     }
 }

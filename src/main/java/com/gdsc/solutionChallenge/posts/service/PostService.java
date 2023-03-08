@@ -5,8 +5,10 @@ import com.gdsc.solutionChallenge.global.utils.SecurityUtil;
 import com.gdsc.solutionChallenge.member.entity.Member;
 import com.gdsc.solutionChallenge.member.repository.MemberRepository;
 import com.gdsc.solutionChallenge.posts.dto.req.PostSaveDto;
+import com.gdsc.solutionChallenge.posts.dto.res.FullPost;
 import com.gdsc.solutionChallenge.posts.entity.Post;
 import com.gdsc.solutionChallenge.posts.repository.PostRepository;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +38,23 @@ public class PostService {
         return savedPost.getTitle();
     }
 
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
+    public List<FullPost> getAllPosts() {
+        List<Post> posts = postRepository.findAll();
+        List<FullPost> fullPostList = new ArrayList<>();
+        for (Post post : posts) {
+            fullPostList.add(FullPost.builder()
+                            .course_id(post.getId())
+                            .grade(post.getGrade())
+                            .subject(post.getSubject())
+                            .writer(post.getWriter().getNickName())
+                            .title(post.getTitle())
+                            .description(post.getDescription())
+                            .video_id(post.getVideo_id())
+                            .drive_link(post.getDrive_link())
+                            .likes(post.getLikes())
+                            .created_at(post.getCreatedDate().toString())
+                            .build());
+        }
+        return fullPostList;
     }
 }
