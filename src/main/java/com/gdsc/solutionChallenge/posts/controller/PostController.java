@@ -6,6 +6,7 @@ import com.gdsc.solutionChallenge.global.exception.ResponseForm;
 import com.gdsc.solutionChallenge.posts.dto.req.PostSaveDto;
 import com.gdsc.solutionChallenge.posts.dto.res.AllFullPostsRes;
 import com.gdsc.solutionChallenge.posts.dto.res.FullPost;
+import com.gdsc.solutionChallenge.posts.dto.res.ListSummPostsRes;
 import com.gdsc.solutionChallenge.posts.dto.res.OneFullPostRes;
 import com.gdsc.solutionChallenge.posts.dto.res.OneSummPostRes;
 import com.gdsc.solutionChallenge.posts.dto.res.SummPost;
@@ -128,5 +129,30 @@ public class PostController {
                 .details(result)
                 .build();
         return new ResponseEntity<>(oneSummPostRes, HttpStatus.OK);
+    }
+
+    @GetMapping("/recent")
+    @Operation(summary = "최근 등록된 강의글들 조회", description = "특정 학년의 최근 등록된 강의글 N개의 요약정보를 조회합니다. \n\n 4,5,6학년의 경우, dummy로 12개 이상씩 넣어뒀고, 7,8학년은 12개 미만으로 넣어뒀습니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "최근 등록된 강의글들 조회 성공 : 해당 학년의 최근 등록된 강의글 N개의 요약정보를 details에 배열로 담아 보냅니다.", content = @Content(schema = @Schema(implementation = ListSummPostsRes.class))),
+            @ApiResponse(responseCode = "406", description = "최근 등록된 강의글들 조회 실패 : 해당 학년의 최근 등록된 강의글이 존재하지 않는 경우.", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
+    public ResponseEntity<?> getRecentSummPosts(
+            @Parameter(name = "grade", description = "학년을 입력해주세요.", required = true, example = "4")
+            @RequestParam Integer grade,
+            @Parameter(name = "number", description = "몇개까지 조회할지 입력해주세요.", required = true, example = "12")
+            @RequestParam Integer number) {
+        List<SummPost> result;
+        try {
+            result = postService.getRecentSummPosts(grade, number);
+        } catch (Exception e) {
+            throw new PostException(e.getMessage());
+        }
+
+        ListSummPostsRes listSummPostsRes = ListSummPostsRes.builder()
+                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .message("최근 등록된 강의글들 조회 성공")
+                .details(result)
+                .build();
+        return new ResponseEntity<>(listSummPostsRes, HttpStatus.OK);
     }
 }

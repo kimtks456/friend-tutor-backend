@@ -96,4 +96,24 @@ public class PostService {
                 .likes(post.getLikes())
                 .build();
     }
+
+    public List<SummPost> getRecentSummPosts(Integer grade, Integer number) {
+        List<Post> posts = postRepository.findTopNByGradeOrderByCreatedDateDesc(grade, number);
+
+        if (posts.isEmpty()) {
+            throw new IllegalArgumentException("해당 학년의 게시글이 하나도 없습니다.");
+        }
+
+        List<SummPost> summPosts = new ArrayList<>();
+        for (Post post : posts) {
+            summPosts.add(SummPost.builder()
+                    .course_id(post.getId())
+                    .writer(post.getWriter().getNickName())
+                    .title(post.getTitle())
+                    .video_id(post.getVideo_id())
+                    .likes(post.getLikes())
+                    .build());
+        }
+        return summPosts;
+    }
 }
