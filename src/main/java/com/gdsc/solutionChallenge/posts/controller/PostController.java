@@ -3,7 +3,7 @@ package com.gdsc.solutionChallenge.posts.controller;
 
 import com.gdsc.solutionChallenge.global.exception.PostException;
 import com.gdsc.solutionChallenge.global.exception.ResponseForm;
-import com.gdsc.solutionChallenge.posts.dto.PostSaveDto;
+import com.gdsc.solutionChallenge.posts.dto.req.PostSaveDto;
 import com.gdsc.solutionChallenge.posts.entity.Post;
 import com.gdsc.solutionChallenge.posts.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,7 +16,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
