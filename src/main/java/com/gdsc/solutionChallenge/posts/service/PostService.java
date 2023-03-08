@@ -6,6 +6,7 @@ import com.gdsc.solutionChallenge.member.entity.Member;
 import com.gdsc.solutionChallenge.member.repository.MemberRepository;
 import com.gdsc.solutionChallenge.posts.dto.req.PostSaveDto;
 import com.gdsc.solutionChallenge.posts.dto.res.FullPost;
+import com.gdsc.solutionChallenge.posts.dto.res.SummPost;
 import com.gdsc.solutionChallenge.posts.entity.Post;
 import com.gdsc.solutionChallenge.posts.repository.PostRepository;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
 
-    public String createPost(PostSaveDto postSaveDto) {
+    public SummPost createPost(PostSaveDto postSaveDto) {
 
         Post post = postSaveDto.toEntity();
         post.confirmWriter(memberRepository.findByUsername(SecurityUtil.getLoginUsername())
@@ -35,7 +36,13 @@ public class PostService {
         member.addScore(10);
         memberRepository.save(member);
 
-        return savedPost.getTitle();
+        return SummPost.builder()
+                .course_id(savedPost.getId())
+                .writer(savedPost.getWriter().getNickName())
+                .title(savedPost.getTitle())
+                .video_id(savedPost.getVideo_id())
+                .likes(savedPost.getLikes())
+                .build();
     }
 
     public List<FullPost> getAllPosts() {

@@ -6,6 +6,8 @@ import com.gdsc.solutionChallenge.global.exception.ResponseForm;
 import com.gdsc.solutionChallenge.posts.dto.req.PostSaveDto;
 import com.gdsc.solutionChallenge.posts.dto.res.FindAllRes;
 import com.gdsc.solutionChallenge.posts.dto.res.FullPost;
+import com.gdsc.solutionChallenge.posts.dto.res.SummPost;
+import com.gdsc.solutionChallenge.posts.dto.res.UploadRes;
 import com.gdsc.solutionChallenge.posts.entity.Post;
 import com.gdsc.solutionChallenge.posts.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,40 +40,40 @@ public class PostController {
     private PostService postService;
 
     @PostMapping
-    @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
+    @Operation(summary = "강의 업로드", description = "강의글을 생성합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "게시글 생성 성공 : 게시글의 title을 details에 담아 보냅니다.", content = @Content(schema = @Schema(implementation = ResponseForm.class))),
-            @ApiResponse(responseCode = "406", description = "게시글 생성 실패 : 게시글 생성 request body 제약조건 확인", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
+            @ApiResponse(responseCode = "200", description = "강의글 생성 성공 : 강의글의 title을 details에 담아 보냅니다.", content = @Content(schema = @Schema(implementation = ResponseForm.class))),
+            @ApiResponse(responseCode = "406", description = "강의글 생성 실패 : 강의글 생성 request body 제약조건 확인", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
     public ResponseEntity<?> createPost(@Valid @RequestBody PostSaveDto postSaveDto) {
-        String title;
+        SummPost post;
         try {
-            title = postService.createPost(postSaveDto);
+            post = postService.createPost(postSaveDto);
         } catch (Exception e) {
             throw new PostException(e.getMessage());
         }
 
-        ResponseForm responseForm = ResponseForm.builder()
+        UploadRes uploadRes = UploadRes.builder()
                 .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .message("게시글 생성 성공")
-                .details(title)
+                .message("강의글 생성 성공")
+                .details(post)
                 .build();
-        return new ResponseEntity<>(responseForm, HttpStatus.OK);
+        return new ResponseEntity<>(uploadRes, HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    @Operation(summary = "[TEST] 모든 게시글 조회", description = "모든 게시글을 조회합니다.")
+    @Operation(summary = "[TEST] 모든 강의글 조회", description = "모든 강의글을 조회합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "모든 게시글 조회 성공 : 모든 게시글을 배열에 담아 보냅니다.", content = @Content(schema = @Schema(implementation = FindAllRes.class))),
-            @ApiResponse(responseCode = "406", description = "모든 게시글 조회 실패 : 게시글이 하나도 없습니다.", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
+            @ApiResponse(responseCode = "200", description = "모든 강의글 조회 성공 : 모든 강의글들을 details에 배열로 담아 보냅니다.", content = @Content(schema = @Schema(implementation = FindAllRes.class))),
+            @ApiResponse(responseCode = "406", description = "모든 강의글 조회 실패 : 조회된 게시물이 하나도 없는 경우.", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
     public ResponseEntity<?> getAllPosts() {
         List<FullPost> result = postService.getAllPosts();
         if (result.isEmpty()) {
-            throw new PostException("게시글이 하나도 없습니다.");
+            throw new PostException("게시물이 하나도 없습니다.");
         }
 
         FindAllRes findAllRes = FindAllRes.builder()
                 .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .message("모든 게시글 조회 성공")
+                .message("모든 강의글 조회 성공")
                 .details(result)
                 .build();
         return new ResponseEntity<>(findAllRes, HttpStatus.OK);
