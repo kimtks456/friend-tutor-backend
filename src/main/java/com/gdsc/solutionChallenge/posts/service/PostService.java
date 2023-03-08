@@ -64,4 +64,20 @@ public class PostService {
         }
         return fullPostList;
     }
+
+    public FullPost getFullPost(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        return FullPost.builder()
+                .course_id(post.getId())
+                .grade(post.getGrade())
+                .subject(post.getSubject())
+                .writer(post.getWriter().getNickName())
+                .title(post.getTitle())
+                .description(post.getDescription())
+                .video_id(post.getVideo_id())
+                .drive_link(post.getDrive_link())
+                .likes(post.getLikes())
+                .created_at(post.getCreatedDate().toString())
+                .build();
+    }
 }
