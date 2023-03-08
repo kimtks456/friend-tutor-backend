@@ -42,7 +42,7 @@ public class PostController {
     @PostMapping
     @Operation(summary = "강의 업로드", description = "강의글을 생성합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "강의글 생성 성공 : 강의글의 title을 details에 담아 보냅니다.", content = @Content(schema = @Schema(implementation = ResponseForm.class))),
+            @ApiResponse(responseCode = "200", description = "강의글 생성 성공 : 강의글의 title을 details에 담아 보냅니다.", content = @Content(schema = @Schema(implementation = UploadRes.class))),
             @ApiResponse(responseCode = "406", description = "강의글 생성 실패 : 강의글 생성 request body 제약조건 확인", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
     public ResponseEntity<?> createPost(@Valid @RequestBody PostSaveDto postSaveDto) {
         SummPost post;

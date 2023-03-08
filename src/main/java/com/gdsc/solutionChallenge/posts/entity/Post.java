@@ -30,7 +30,6 @@ public class Post extends BaseTimeEntity {
     @Column(name = "course_id", nullable = false)
     private Long id;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id")
     private Member writer;
