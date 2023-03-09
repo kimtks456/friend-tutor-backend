@@ -71,7 +71,6 @@ public class Post extends BaseTimeEntity {
 
     //== 연관관계 메서드 ==//
     public void confirmWriter(Member writer) {
-
         this.writer = writer;
         writer.addCourse(this);
     }

@@ -3,6 +3,7 @@ package com.gdsc.solutionChallenge.member.entity;
 import static jakarta.persistence.CascadeType.ALL;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gdsc.solutionChallenge.posts.entity.Certificate;
 import com.gdsc.solutionChallenge.posts.entity.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -80,17 +81,24 @@ public class Member extends BaseTimeEntity implements UserDetails {
     @OneToMany(mappedBy = "writer", cascade = ALL, orphanRemoval = true)
     private List<Post> postList = new ArrayList<>();
 
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
+    private List<Certificate> certificateList = new ArrayList<>();
 
 
 
 
     //== 연관관계 메서드 ==//
     public void addCourse(Post post){
-        postList.add(post);
+        this.postList.add(post);
     }
 
     public void addScore(Integer score){
         this.score += score;
+    }
+
+    public void addCertificate(Certificate certificate){
+        this.certificateList.add(certificate);
     }
 
     @Override
