@@ -2,6 +2,8 @@ package com.gdsc.solutionChallenge.posts.controller;
 
 import com.gdsc.solutionChallenge.global.exception.PostException;
 import com.gdsc.solutionChallenge.global.exception.ResponseForm;
+import com.gdsc.solutionChallenge.posts.dto.res.CertificateInfo;
+import com.gdsc.solutionChallenge.posts.dto.res.CertificateInfoRes;
 import com.gdsc.solutionChallenge.posts.dto.res.CheckCertificateRes;
 import com.gdsc.solutionChallenge.posts.service.CertificateService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,9 +47,23 @@ public class CertificateController {
         return new ResponseEntity<>(checkCertificateRes, HttpStatus.OK);
     }
 
-//    @GetMapping("/issue")
-//    @Operation(summary = "인증서 발급", description = "인증서 발급")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "인증서 발급 성공", content = @Content(schema = @Schema(implementation = CheckCertificateRes.class))),
-//            @ApiResponse(responseCode = "406", description = "인증서 발급 로직 에러 : 발급 과정에 error 발생", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
+    @GetMapping("/issue")
+    @Operation(summary = "인증서 발급", description = "인증서 발급")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "인증서 발급 성공", content = @Content(schema = @Schema(implementation = CertificateInfoRes.class))),
+            @ApiResponse(responseCode = "406", description = "인증서 발급 로직 에러 : 발급 과정에 error 발생", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
+    public ResponseEntity<?> issue() {
+        CertificateInfo certificateInfo;
+        try {
+            certificateInfo = certificateService.issueCertificate();
+        } catch (Exception e) {
+            throw new PostException(e.getMessage());
+        }
+
+        CertificateInfoRes certificateInfoRes = CertificateInfoRes.builder()
+                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .message("인증서 발급 성공")
+                .details(certificateInfo)
+                .build();
+    }
 }

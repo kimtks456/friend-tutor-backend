@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class CertificateService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+
     public CheckCertificateRes checkCertificate() {
         Integer message;
         Integer details;

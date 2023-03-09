@@ -48,4 +48,14 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
         return new ResponseEntity<>(responseForm, HttpStatus.NOT_ACCEPTABLE);
     }
+
+    @ExceptionHandler(CertificateException.class)
+    public final ResponseEntity<Object> handleCertificateException(Exception ex) {
+        ResponseForm responseForm = ResponseForm.builder()
+                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")))
+                .message("Certificate logic 관련 예외가 발생했습니다.")
+                .details(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(responseForm, HttpStatus.NOT_ACCEPTABLE);
+    }
 }
