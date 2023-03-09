@@ -9,7 +9,7 @@ import lombok.Data;
 @Schema(name = "인증서 발급 response body")
 public class CertificateInfo {
     @Schema(description = "인증서 id", example = "1")
-    private Integer certificate_id;
+    private Long certificate_id;
 
     @Schema(description = "수여자 실몀", example = "San Kim")
     private String name;
@@ -17,7 +17,7 @@ public class CertificateInfo {
     @Schema(description = "활동명", example = "Peer Mentoring")
     private String title;
 
-    @Schema(description = "활동 시작일", example = "2022.01.01")
+    @Schema(description = "활동 시작일 = DB에 존재하는 첫 게시글 업로드일(첫게시글 업로드일 아님. ", example = "2022.01.01")
     private String start;
 
     @Schema(description = "활동 종료일 = 마지막 게시글 일자 + 1달", example = "2023.01.01")
@@ -31,6 +31,8 @@ public class CertificateInfo {
 
     @Schema(description = "발급일", example = "2023.02.")
     private String issue_date;
+
+    @Schema(description = "Gold(300점 이상), Silver(150점 이상), Bronze(70점 이상)", example = "Bronze")
     private String rank;
 
 }

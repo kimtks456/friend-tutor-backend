@@ -55,7 +55,8 @@ public class CertificateController {
     public ResponseEntity<?> issue() {
         CertificateInfo certificateInfo;
         try {
-            certificateInfo = certificateService.issueCertificate();
+            certificateInfo = certificateService.makeCertificate();
+            log.info("Issue DateTime : " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         } catch (Exception e) {
             throw new PostException(e.getMessage());
         }
@@ -65,5 +66,7 @@ public class CertificateController {
                 .message("인증서 발급 성공")
                 .details(certificateInfo)
                 .build();
+
+        return new ResponseEntity<>(certificateInfoRes, HttpStatus.OK);
     }
 }
