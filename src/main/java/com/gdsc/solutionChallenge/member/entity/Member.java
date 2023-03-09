@@ -68,6 +68,8 @@ public class Member extends BaseTimeEntity implements UserDetails {
     @Email(message = "이메일 형식이 아닙니다.")
     private String email;
 
+    // 컬렉션은 기본적으로 부모 Entity와 한 쌍으로 움직이기 때문에 cascade 옵션이 없어도 부모 Entity와 함께 저장/삭제된다. (cascade 옵션을 ALL로 준 것 처럼 작동함)
+    // https://prohannah.tistory.com/132
     @ElementCollection(fetch = FetchType.EAGER) // 1:M 에서는 M을 필요시점에 가져올 수 있는데 바로가져오기.
     @Builder.Default // 객체를 원하는 값으로 initialize해서 받을 수 있음.
     private List<String> roles = new ArrayList<>();
@@ -81,9 +83,6 @@ public class Member extends BaseTimeEntity implements UserDetails {
     @OneToMany(mappedBy = "writer", cascade = ALL, orphanRemoval = true)
     private List<Post> postList = new ArrayList<>();
 
-    @Builder.Default
-    @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
-    private List<Certificate> certificateList = new ArrayList<>();
 
 
 
@@ -97,9 +96,6 @@ public class Member extends BaseTimeEntity implements UserDetails {
         this.score += score;
     }
 
-    public void addCertificate(Certificate certificate){
-        this.certificateList.add(certificate);
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

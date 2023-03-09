@@ -30,9 +30,8 @@ public class Certificate extends BaseTimeEntity {
     @Column(name = "certificate_id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @Column(name = "member_id", nullable = false)
+    private Integer member_id;
 
     @Column(name = "name")
     private String name; // 실명
@@ -64,14 +63,5 @@ public class Certificate extends BaseTimeEntity {
         this.lectures = lectures;
         this.likes = likes;
         this.rank = rank;
-    }
-
-
-
-
-    //== 연관관계 메서드 ==//
-    public void confirmMember(Member member) {
-        this.member = member;
-        member.addCertificate(this);
     }
 }

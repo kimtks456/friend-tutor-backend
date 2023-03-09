@@ -44,4 +44,10 @@ public class CertificateController {
         checkCertificateRes.setTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         return new ResponseEntity<>(checkCertificateRes, HttpStatus.OK);
     }
+
+//    @GetMapping("/issue")
+//    @Operation(summary = "인증서 발급", description = "인증서 발급")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "인증서 발급 성공", content = @Content(schema = @Schema(implementation = CheckCertificateRes.class))),
+//            @ApiResponse(responseCode = "406", description = "인증서 발급 로직 에러 : 발급 과정에 error 발생", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
 }
