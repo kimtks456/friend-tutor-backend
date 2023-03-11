@@ -106,6 +106,8 @@ public class MemberController {
         try {
             tokenInfo = memberService.login(loginDto.username(), loginDto.password());
         } catch (Exception e) {
+            e.getStackTrace();
+            log.error(e.getMessage());
             throw new UserException(e.getMessage());
         }
         return tokenInfo;

@@ -53,6 +53,7 @@ public class PostController {
         try {
             post = postService.createPost(postSaveDto);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new PostException(e.getMessage());
         }
 
@@ -74,6 +75,7 @@ public class PostController {
         try {
             result = postService.getAllPosts();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new PostException(e.getMessage());
         }
 

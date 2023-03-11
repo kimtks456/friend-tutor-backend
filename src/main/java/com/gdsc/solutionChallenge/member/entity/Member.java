@@ -2,10 +2,11 @@ package com.gdsc.solutionChallenge.member.entity;
 
 import static jakarta.persistence.CascadeType.ALL;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.gdsc.solutionChallenge.posts.entity.Certificate;
+import com.gdsc.solutionChallenge.global.config.AES;
+import com.gdsc.solutionChallenge.global.utils.EmailConverter;
 import com.gdsc.solutionChallenge.posts.entity.Post;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,6 +14,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PostLoad;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -26,10 +30,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @Table(name = "member")
 @Entity
@@ -38,6 +45,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Slf4j
 public class Member extends BaseTimeEntity implements UserDetails {
 
     @Id
@@ -65,7 +73,8 @@ public class Member extends BaseTimeEntity implements UserDetails {
     private Integer grade;
 
     @Column(nullable = false)
-    @Email(message = "이메일 형식이 아닙니다.")
+//    @Email(message = "이메일 형식이 아닙니다.")
+    @Convert(converter = EmailConverter.class)
     private String email;
 
     // 컬렉션은 기본적으로 부모 Entity와 한 쌍으로 움직이기 때문에 cascade 옵션이 없어도 부모 Entity와 함께 저장/삭제된다. (cascade 옵션을 ALL로 준 것 처럼 작동함)
@@ -84,6 +93,30 @@ public class Member extends BaseTimeEntity implements UserDetails {
     private List<Post> postList = new ArrayList<>();
 
 
+//    @PrePersist
+//    @PreUpdate
+//    private void encryptEmail() {
+//        if (!isValidEmail(this.email)) {
+//            log.error(this.email.toString());
+//            throw new RuntimeException("이메일 형식이 아닙니다.");
+//        }
+//        try {
+//            this.email = AES.encrypt(this.email);
+//        } catch (Exception e) {
+//            // Handle the exception if the email address is invalid or encryption fails
+//            // You can throw a custom exception or log the error message here
+//            throw new RuntimeException("이메일 암호화 실패 : ", e.getCause());
+//        }
+//    }
+//
+//    @PostLoad
+//    private void decryptEmail() {
+//        try {
+//            this.email = AES.decrypt(this.email);
+//        } catch (Exception e) {
+//            throw new RuntimeException("이메일 복호화 실패 : ", e);
+//        }
+//    }
 
 
 
@@ -136,5 +169,9 @@ public class Member extends BaseTimeEntity implements UserDetails {
     public void addUserAuthority() {
         this.roles.add(Role.USER.getKey());
     }
-}
 
+    public boolean isValidEmail(String email) {
+        EmailValidator emailValidator = new EmailValidator();
+        return emailValidator.isValid(email, null);
+    }
+}
