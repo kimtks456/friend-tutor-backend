@@ -73,7 +73,7 @@ public class Member extends BaseTimeEntity implements UserDetails {
     private Integer grade;
 
     @Column(nullable = false)
-//    @Email(message = "이메일 형식이 아닙니다.")
+    @Email(message = "이메일 형식이 아닙니다.")
     @Convert(converter = EmailConverter.class)
     private String email;
 
