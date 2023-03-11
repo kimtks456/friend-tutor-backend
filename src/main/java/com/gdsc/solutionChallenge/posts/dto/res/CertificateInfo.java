@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-@Schema(name = "인증서 발급 response body")
+@Schema(name = "인증서 정보")
 public class CertificateInfo {
     @Schema(description = "인증서 id", example = "1")
     private Long certificate_id;

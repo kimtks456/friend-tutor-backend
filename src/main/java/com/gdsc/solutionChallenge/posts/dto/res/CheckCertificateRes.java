@@ -9,8 +9,8 @@ import lombok.Data;
 @Schema(name = "인증서 발급가능 여부 response body")
 public class CheckCertificateRes {
     private String time;
-    @Schema(description = "0 : 응답 성공, 발급 가능 \n 1 : 응답 성공, 발급 실패 \n 2 : 응답 실패(406)", example = "1")
+    @Schema(description = "0 : 응답 성공, 발급 가능 \n 1 : 응답 성공, 발급 실패", example = "1")
     private Integer message;
-    @Schema(description = "0 : 응답 성공, 발급 가능 \n N : 응답 성공, 인증서 발급(70점이상)까지 부족한 점수 \n 2 : 응답 실패 상세 error message", example = "30")
+    @Schema(description = "0 : 응답 성공, 발급 가능 \n N : 응답 성공, 인증서 발급(70점이상)까지 부족한 점수", example = "30")
     private Integer details;
 }

@@ -2,6 +2,7 @@ package com.gdsc.solutionChallenge.member.service;
 
 import com.gdsc.solutionChallenge.global.config.JwtTokenProvider;
 import com.gdsc.solutionChallenge.global.utils.SecurityUtil;
+import com.gdsc.solutionChallenge.member.dto.MemberInfo;
 import com.gdsc.solutionChallenge.member.dto.SignUpDto;
 import com.gdsc.solutionChallenge.member.dto.TokenInfo;
 import com.gdsc.solutionChallenge.member.entity.Member;
@@ -72,5 +73,20 @@ public class MemberService {
         memberRepository.delete(member);
 
         return member.getUsername();
+    }
+
+    public MemberInfo getUserInfo() {
+        Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 아이디입니다."));
+
+        return MemberInfo.builder()
+                .member_id(member.getId())
+                .username(member.getUsername())
+                .name(member.getName())
+                .nickName(member.getNickName())
+                .grade(member.getGrade())
+                .email(member.getEmail())
+                .score(member.getScore())
+                .build();
     }
 }

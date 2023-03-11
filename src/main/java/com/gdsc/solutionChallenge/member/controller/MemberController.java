@@ -5,6 +5,8 @@ import static com.gdsc.solutionChallenge.global.utils.JwtUtil.getUsernameFromTok
 import com.gdsc.solutionChallenge.global.exception.ResponseForm;
 import com.gdsc.solutionChallenge.global.exception.UserException;
 import com.gdsc.solutionChallenge.member.dto.LoginDto;
+import com.gdsc.solutionChallenge.member.dto.MemberInfo;
+import com.gdsc.solutionChallenge.member.dto.MemberInfoRes;
 import com.gdsc.solutionChallenge.member.dto.SignUpDto;
 import com.gdsc.solutionChallenge.member.dto.TokenInfo;
 import com.gdsc.solutionChallenge.member.dto.WithdrawDto;
@@ -44,10 +46,34 @@ public class MemberController {
 
 
     @GetMapping
-    @Operation(summary = "BE 연결 테스트", description = "정상적으로 BE와 연결되면, '성공' 이라는 String 반환")
+    @Operation(summary = "[TEST] BE 연결 테스트", description = "정상적으로 BE와 연결되면, '성공' 이라는 String 반환")
     public String test() {
         return "성공";
     }
+
+    @GetMapping("/info")
+    @Operation(summary = "사용자 정보 조회", description = "PW 제외한, 사용자 정보를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "사용자 정보 조회 성공 : 사용자 정보를 details에 담아 보냅니다.", content = @Content(schema = @Schema(implementation = MemberInfoRes.class))),
+            @ApiResponse(responseCode = "406", description = "사용자 정보 조회 실패 : details의 error message 확인", content = @Content(schema = @Schema(implementation = ResponseForm.class)))
+    })
+    public ResponseEntity<?> getUserInfo() {
+        MemberInfo memberInfo;
+        try {
+            memberInfo = memberService.getUserInfo();
+        } catch (Exception e) {
+            throw new UserException(e.getMessage());
+        }
+
+        MemberInfoRes memberInfoRes = MemberInfoRes.builder()
+                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")))
+                .message("사용자 정보 조회 성공")
+                .details(memberInfo)
+                .build();
+
+        return new ResponseEntity<>(memberInfoRes, HttpStatus.OK);
+    }
+
 
     @PostMapping("/signup")
     @Operation(summary = "회원가입", description = "회원가입을 합니다.")
