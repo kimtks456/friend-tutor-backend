@@ -6,6 +6,7 @@ import com.gdsc.solutionChallenge.global.exception.ResponseForm;
 import com.gdsc.solutionChallenge.posts.dto.req.PostSaveDto;
 import com.gdsc.solutionChallenge.posts.dto.res.AllFullPostsRes;
 import com.gdsc.solutionChallenge.posts.dto.res.FullPost;
+import com.gdsc.solutionChallenge.posts.dto.res.ListSubjectsRes;
 import com.gdsc.solutionChallenge.posts.dto.res.ListSummPostsRes;
 import com.gdsc.solutionChallenge.posts.dto.res.OneFullPostRes;
 import com.gdsc.solutionChallenge.posts.dto.res.OneSummPostRes;
@@ -156,5 +157,21 @@ public class PostController {
                 .details(result)
                 .build();
         return new ResponseEntity<>(listSummPostsRes, HttpStatus.OK);
+    }
+
+    @GetMapping("/subjects")
+    @Operation(summary = "모든 과목 조회", description = "입력 가능한 과목 list를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "과목 조회 성공 : 모든 과목을 details에 배열로 담아 보냅니다.", content = @Content(schema = @Schema(implementation = ListSubjectsRes.class))),
+            @ApiResponse(responseCode = "406", description = "과목 조회 실패 : 과목이 존재하지 않는 경우.", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
+    public ResponseEntity<?> getSubjects() {
+        List<String> subjects = postService.getSubjects();
+
+        ListSubjectsRes listSubjectsRes = ListSubjectsRes.builder()
+                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .message("과목 조회 성공")
+                .details(subjects)
+                .build();
+        return new ResponseEntity<>(listSubjectsRes, HttpStatus.OK);
     }
 }

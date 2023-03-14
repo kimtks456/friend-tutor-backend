@@ -10,6 +10,7 @@ import com.gdsc.solutionChallenge.posts.dto.res.SummPost;
 import com.gdsc.solutionChallenge.posts.entity.Post;
 import com.gdsc.solutionChallenge.posts.repository.PostRepository;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+    public final static List<String> SUBJECTS = Arrays.asList("math", "korean", "english", "science", "other");
 
     public SummPost createPost(PostSaveDto postSaveDto) {
 
@@ -116,4 +118,15 @@ public class PostService {
         }
         return summPosts;
     }
+
+    public List<String> getSubjects() {
+        return SUBJECTS;
+    }
+
+//    public String getSubjectRegExp() {
+//        return SUBJECTS.stream()
+//                .map(s -> "(" + s + ")")
+//                .reduce((s1, s2) -> s1 + "|" + s2)
+//                .orElse("");
+//    }
 }
