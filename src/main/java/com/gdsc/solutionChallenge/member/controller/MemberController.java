@@ -128,7 +128,7 @@ public class MemberController {
         return tokenInfo;
     }
 
-    @DeleteMapping
+    @DeleteMapping("/withdraw")
     @Operation(summary = "회원 탈퇴", description = "accessToken, PW로 회원탈퇴 합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원탈퇴 성공 : 탈퇴한 username을 details에 담아 보냅니다.", content = @Content(schema = @Schema(implementation = ResponseForm.class))),
