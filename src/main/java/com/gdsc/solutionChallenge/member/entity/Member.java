@@ -2,6 +2,7 @@ package com.gdsc.solutionChallenge.member.entity;
 
 import static jakarta.persistence.CascadeType.ALL;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gdsc.solutionChallenge.global.config.AES;
 import com.gdsc.solutionChallenge.global.utils.EmailConverter;
 import com.gdsc.solutionChallenge.posts.entity.Post;
@@ -87,6 +88,7 @@ public class Member extends BaseTimeEntity implements UserDetails {
     private Integer score;
 
     @Builder.Default
+    @JsonIgnore
     // 연관관계의 owner가 아니므로, read만 가능하게 단방향 하나 더 추가해서 양방향으로 만듦.
     // child class에서 선언한 Parent class의 변수명
     @OneToMany(mappedBy = "writer", cascade = ALL, orphanRemoval = true)

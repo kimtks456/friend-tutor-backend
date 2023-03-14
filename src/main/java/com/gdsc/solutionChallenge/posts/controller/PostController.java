@@ -3,6 +3,7 @@ package com.gdsc.solutionChallenge.posts.controller;
 
 import com.gdsc.solutionChallenge.global.exception.PostException;
 import com.gdsc.solutionChallenge.global.exception.ResponseForm;
+import com.gdsc.solutionChallenge.member.entity.Member;
 import com.gdsc.solutionChallenge.posts.dto.req.PostSaveDto;
 import com.gdsc.solutionChallenge.posts.dto.res.AllFullPostsRes;
 import com.gdsc.solutionChallenge.posts.dto.res.FullPost;

@@ -89,4 +89,10 @@ public class MemberService {
                 .score(member.getScore())
                 .build();
     }
+
+    public List<Member> getAllUser() {
+        List<Member> members = memberRepository.findAll();
+
+        return members;
+    }
 }

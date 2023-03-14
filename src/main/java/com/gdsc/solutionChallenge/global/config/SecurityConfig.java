@@ -22,6 +22,8 @@ public class SecurityConfig {
             "/user/login",
             "/user/signup",
             "/user",
+            "/user/all",
+            "/course/all",
             /* swagger v3 */
             "/v3/api-docs/**",
             "/swagger-ui/**",

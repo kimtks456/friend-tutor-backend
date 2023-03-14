@@ -4,12 +4,14 @@ import static com.gdsc.solutionChallenge.global.utils.JwtUtil.getUsernameFromTok
 
 import com.gdsc.solutionChallenge.global.exception.ResponseForm;
 import com.gdsc.solutionChallenge.global.exception.UserException;
+import com.gdsc.solutionChallenge.member.dto.AllMembersRes;
 import com.gdsc.solutionChallenge.member.dto.LoginDto;
 import com.gdsc.solutionChallenge.member.dto.MemberInfo;
 import com.gdsc.solutionChallenge.member.dto.MemberInfoRes;
 import com.gdsc.solutionChallenge.member.dto.SignUpDto;
 import com.gdsc.solutionChallenge.member.dto.TokenInfo;
 import com.gdsc.solutionChallenge.member.dto.WithdrawDto;
+import com.gdsc.solutionChallenge.member.entity.Member;
 import com.gdsc.solutionChallenge.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,6 +25,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,6 +52,17 @@ public class MemberController {
     @Operation(summary = "[TEST] BE 연결 테스트", description = "정상적으로 BE와 연결되면, '성공' 이라는 String 반환")
     public String test() {
         return "성공";
+    }
+
+    @GetMapping("/all")
+    @Operation(summary = "[TEST] 모든 유저 조회", description = "모든 유저의 정보를 조회합니다.")
+    public ResponseEntity<?> getAllUser() {
+        List<Member> members = memberService.getAllUser();
+
+        return new ResponseEntity<>(AllMembersRes.builder()
+                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .details(members)
+                .build(), HttpStatus.OK);
     }
 
     @GetMapping("/info")
