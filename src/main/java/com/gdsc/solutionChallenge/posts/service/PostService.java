@@ -28,8 +28,13 @@ public class PostService {
     public final static List<String> SUBJECTS = Arrays.asList("math", "korean", "english", "science", "other");
 
     public SummPost createPost(PostSaveDto postSaveDto) {
+        Post post;
+        try {
+            post = postSaveDto.toEntity();
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
 
-        Post post = postSaveDto.toEntity();
         post.confirmWriter(memberRepository.findByUsername(SecurityUtil.getLoginUsername())
                 .orElseThrow(() -> new IllegalArgumentException("로그인된 사용자가 DB에 없습니다.")));
 
