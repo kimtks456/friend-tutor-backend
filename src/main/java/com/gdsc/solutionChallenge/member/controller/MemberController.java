@@ -85,6 +85,7 @@ public class MemberController {
         try {
             username = memberService.signup(signUpDto);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new UserException(e.getMessage());
         }
 
@@ -106,7 +107,7 @@ public class MemberController {
         try {
             tokenInfo = memberService.login(loginDto.username(), loginDto.password());
         } catch (Exception e) {
-            e.getStackTrace();
+            e.printStackTrace();
             log.error(e.getMessage());
             throw new UserException(e.getMessage());
         }

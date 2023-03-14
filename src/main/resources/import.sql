@@ -6,11 +6,11 @@
 -- Insert a user with an encoded password
 -- INSERT INTO 하고 VALUES 줄바꾸면 Mysql error 발생.
 --INSERT INTO member (username, password, name, nick_name, grade, email, score) VALUES ('gdsc1', '{bcrypt}$2a$10$oY5Q9UgKEYFTpPfECqom4eqwN3q7YV4lmYv56RdX4dLBh8BHUX6YW', '김산', 'mt_kim', 7, 'gdsc@gmail.com', 0);
-INSERT INTO member (username, password, name, nick_name, grade, email, score) VALUES ('gdsc1', '{bcrypt}$2a$10$oY5Q9UgKEYFTpPfECqom4eqwN3q7YV4lmYv56RdX4dLBh8BHUX6YW', '김산', 'mt_kim', 7, 'dab74b58cb28d14ba4e57549f89e91716f74d3e4d25c5ca4deb533a9fdc02e17', 0);
+INSERT INTO member (username, password, name, nick_name, grade, email, score) VALUES ('gdsc1', '{bcrypt}$2a$10$oY5Q9UgKEYFTpPfECqom4eqwN3q7YV4lmYv56RdX4dLBh8BHUX6YW', '김산', 'mt_kim', 7, '7c0842caeceab9b82a1ab9ab0eb1c552211f775452c5a262e6173b6fd37572f7', 0);
 --INSERT INTO member (username, password, name, nick_name, grade, email, score) VALUES ('gdsc2', '{bcrypt}$2a$10$oY5Q9UgKEYFTpPfECqom4eqwN3q7YV4lmYv56RdX4dLBh8BHUX6YW', '안하늘', 'sky', 6, 'gdsc@gmail.com', 0);
-INSERT INTO member (username, password, name, nick_name, grade, email, score) VALUES ('gdsc2', '{bcrypt}$2a$10$oY5Q9UgKEYFTpPfECqom4eqwN3q7YV4lmYv56RdX4dLBh8BHUX6YW', '안하늘', 'sky', 6, 'dab74b58cb28d14ba4e57549f89e91716f74d3e4d25c5ca4deb533a9fdc02e17', 0);
+INSERT INTO member (username, password, name, nick_name, grade, email, score) VALUES ('gdsc2', '{bcrypt}$2a$10$oY5Q9UgKEYFTpPfECqom4eqwN3q7YV4lmYv56RdX4dLBh8BHUX6YW', '안하늘', 'sky', 6, '7c0842caeceab9b82a1ab9ab0eb1c552211f775452c5a262e6173b6fd37572f7', 0);
 --INSERT INTO member (username, password, name, nick_name, grade, email, score) VALUES ('gdsc3', '{bcrypt}$2a$10$oY5Q9UgKEYFTpPfECqom4eqwN3q7YV4lmYv56RdX4dLBh8BHUX6YW', '서호동', '호똥', 5, 'gdsc@gmail.com', 0);
-INSERT INTO member (username, password, name, nick_name, grade, email, score) VALUES ('gdsc3', '{bcrypt}$2a$10$oY5Q9UgKEYFTpPfECqom4eqwN3q7YV4lmYv56RdX4dLBh8BHUX6YW', '서호동', '호똥', 5, 'dab74b58cb28d14ba4e57549f89e91716f74d3e4d25c5ca4deb533a9fdc02e17', 0);
+INSERT INTO member (username, password, name, nick_name, grade, email, score) VALUES ('gdsc3', '{bcrypt}$2a$10$oY5Q9UgKEYFTpPfECqom4eqwN3q7YV4lmYv56RdX4dLBh8BHUX6YW', '서호동', '호똥', 5, '7c0842caeceab9b82a1ab9ab0eb1c552211f775452c5a262e6173b6fd37572f7', 0);
 
 INSERT INTO member_roles (member_id, roles) VALUES (1, 'USER');
 INSERT INTO member_roles (member_id, roles) VALUES (2, 'USER');
