@@ -122,15 +122,14 @@ public class CertificateService {
     }
 
     public String getRank(Integer score) {
-//        if (score >= 300) {
-//            return "Gold";
-//        } else if (score >= 150) {
-//            return "Silver";
-//        } else if (score >= 70) {
-//            return "Bronze";
-//        } else {
-//            throw new IllegalArgumentException("점수가 70점 미만인데 인증서 가능여부 로직을 통과했습니다.");
-//        }
-        return "Bronze";
+        if (score >= 300) {
+            return "Gold";
+        } else if (score >= 150) {
+            return "Silver";
+        } else if (score >= 70) {
+            return "Bronze";
+        } else {
+            throw new IllegalArgumentException("점수가 70점 미만인데 인증서 가능여부 로직을 통과했습니다.");
+        }
     }
 }
