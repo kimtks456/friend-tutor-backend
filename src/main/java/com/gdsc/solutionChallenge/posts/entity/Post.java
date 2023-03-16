@@ -1,5 +1,7 @@
 package com.gdsc.solutionChallenge.posts.entity;
 
+import static jakarta.persistence.CascadeType.ALL;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gdsc.solutionChallenge.member.entity.BaseTimeEntity;
 import com.gdsc.solutionChallenge.member.entity.Member;
@@ -11,7 +13,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,7 +32,7 @@ import lombok.ToString;
 public class Post extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "course_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,6 +59,9 @@ public class Post extends BaseTimeEntity {
 
     @Column(name = "likes")
     private Integer likes;
+
+    @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
+    private List<Likes> likesList = new ArrayList<>();
 
     @Builder
     public Post(Integer grade, String subject, String title, String description, String drive_link, String video_id, Integer likes) {

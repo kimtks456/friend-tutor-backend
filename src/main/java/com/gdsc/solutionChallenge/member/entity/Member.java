@@ -5,6 +5,7 @@ import static jakarta.persistence.CascadeType.ALL;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gdsc.solutionChallenge.global.config.AES;
 import com.gdsc.solutionChallenge.global.utils.EmailConverter;
+import com.gdsc.solutionChallenge.posts.entity.Likes;
 import com.gdsc.solutionChallenge.posts.entity.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -94,6 +95,9 @@ public class Member extends BaseTimeEntity implements UserDetails {
     @OneToMany(mappedBy = "writer", cascade = ALL, orphanRemoval = true)
     private List<Post> postList = new ArrayList<>();
 
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
+    private List<Likes> likesList = new ArrayList<>();
 
 //    @PrePersist
 //    @PreUpdate
