@@ -7,7 +7,9 @@ import com.gdsc.solutionChallenge.member.repository.MemberRepository;
 import com.gdsc.solutionChallenge.posts.dto.req.PostSaveDto;
 import com.gdsc.solutionChallenge.posts.dto.res.FullPost;
 import com.gdsc.solutionChallenge.posts.dto.res.SummPost;
+import com.gdsc.solutionChallenge.posts.entity.Likes;
 import com.gdsc.solutionChallenge.posts.entity.Post;
+import com.gdsc.solutionChallenge.posts.repository.LikesRepository;
 import com.gdsc.solutionChallenge.posts.repository.PostRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +27,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+    private final LikesRepository likesRepository;
     public final static List<String> SUBJECTS = Arrays.asList("math", "korean", "english", "science", "other");
 
     public SummPost createPost(PostSaveDto postSaveDto) {
@@ -79,6 +82,8 @@ public class PostService {
 
     public FullPost getFullPost(Long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        Long memberId = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).get().getId();
+        boolean isLiked = likesRepository.findByPostIdAndMemberId(id, memberId).isPresent();
         return FullPost.builder()
                 .course_id(post.getId())
                 .grade(post.getGrade())
@@ -90,6 +95,7 @@ public class PostService {
                 .drive_link(post.getDrive_link())
                 .likes(post.getLikes())
                 .created_at(post.getCreatedDate().toString())
+                .is_liked(isLiked)
                 .build();
     }
 

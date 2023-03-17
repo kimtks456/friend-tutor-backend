@@ -67,3 +67,10 @@ INSERT INTO course_info (created_date, title, description, writer_id, grade, sub
 UPDATE member SET score = 10 * (SELECT COUNT(*) FROM course_info WHERE writer_id = 1) + (SELECT SUM(likes) FROM course_info WHERE writer_id = 1) WHERE id = 1;
 UPDATE member SET score = 10 * (SELECT COUNT(*) FROM course_info WHERE writer_id = 2) + (SELECT SUM(likes) FROM course_info WHERE writer_id = 2) WHERE id = 2;
 UPDATE member SET score = 10 * (SELECT COUNT(*) FROM course_info WHERE writer_id = 3) + (SELECT SUM(likes) FROM course_info WHERE writer_id = 3) WHERE id = 3;
+
+INSERT INTO likes (member_id, post_id) VALUES (1, 1);
+INSERT INTO likes (member_id, post_id) VALUES (1, 2);
+INSERT INTO likes (member_id, post_id) VALUES (1, 3);
+INSERT INTO likes (member_id, post_id) VALUES (1, 4);
+INSERT INTO likes (member_id, post_id) VALUES (1, 5);
+INSERT INTO likes (member_id, post_id) VALUES (1, 6);

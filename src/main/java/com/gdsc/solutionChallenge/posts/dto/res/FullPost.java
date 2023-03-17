@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-@Schema(name = "강의글 상세 정자")
+@Schema(name = "강의글 상세 정보")
 public class FullPost {
     private Long course_id;
     private Integer grade;
@@ -20,4 +20,5 @@ public class FullPost {
     private String drive_link;
     private Integer likes;
     private String created_at;
+    private Boolean is_liked;
 }
