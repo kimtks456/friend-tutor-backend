@@ -188,6 +188,7 @@ public class PostController {
         try {
             result = postService.likePost(courseId);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new PostException(e.getMessage());
         }
 

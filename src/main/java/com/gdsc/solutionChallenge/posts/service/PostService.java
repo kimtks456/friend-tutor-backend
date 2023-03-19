@@ -137,22 +137,24 @@ public class PostService {
 
     public boolean likePost(Long courseId) {
         Post post = postRepository.findById(courseId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
-        Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).get();
-        Likes likes = likesRepository.findByPostIdAndMemberId(courseId, member.getId()).orElse(null);
+        Member writer = memberRepository.findById(post.getWriter().getId()).get();
+        Member liker = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).get();
+        Likes likes = likesRepository.findByPostIdAndMemberId(courseId, liker.getId()).orElse(null);
 
         if (likes == null) {
-            likes.confirmMemberPost(member, post);
-            member.updateScore(Score.like.getScore());
+            Likes newlikes = new Likes();
+            newlikes.confirmMemberPost(liker, post);
+            writer.updateScore(Score.like.getScore());
             post.updateLikes(1);
-            likesRepository.save(likes);
+            likesRepository.save(newlikes);
             postRepository.save(post);
-            memberRepository.save(member);
+            memberRepository.save(writer);
             return true;
         } else {
             likesRepository.delete(likes);
-            member.updateScore(Score.dislike.getScore());
+            writer.updateScore(Score.dislike.getScore());
             post.updateLikes(-1);
-            memberRepository.save(member);
+            memberRepository.save(writer);
             postRepository.save(post);
             return false;
         }
