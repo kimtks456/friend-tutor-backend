@@ -7,6 +7,7 @@ import com.gdsc.solutionChallenge.member.entity.Member;
 import com.gdsc.solutionChallenge.posts.dto.req.PostSaveDto;
 import com.gdsc.solutionChallenge.posts.dto.res.AllFullPostsRes;
 import com.gdsc.solutionChallenge.posts.dto.res.FullPost;
+import com.gdsc.solutionChallenge.posts.dto.res.LikeRes;
 import com.gdsc.solutionChallenge.posts.dto.res.ListSubjectsRes;
 import com.gdsc.solutionChallenge.posts.dto.res.ListSummPostsRes;
 import com.gdsc.solutionChallenge.posts.dto.res.OneFullPostRes;
@@ -174,5 +175,35 @@ public class PostController {
                 .details(subjects)
                 .build();
         return new ResponseEntity<>(listSubjectsRes, HttpStatus.OK);
+    }
+
+    @GetMapping("/like/{course_id}")
+    @Operation(summary = "추천, 추천 취소 요청", description = "해당 강의글을 추천 or 추천 취소합니다.")
+    @Parameter(name = "course_id", description = "추천할 강의글의 id", required = true)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "추천, 추천 취소 성공 : 해당 강의글을 추천 하는지 여부를 details에 담아 반환합니다.", content = @Content(schema = @Schema(implementation = LikeRes.class))),
+            @ApiResponse(responseCode = "406", description = "추천 기능 실패 : 추천 or 추천 취소 실패", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
+    public ResponseEntity<?> likePost(@PathVariable("course_id") Long courseId) {
+        boolean result;
+        try {
+            result = postService.likePost(courseId);
+        } catch (Exception e) {
+            throw new PostException(e.getMessage());
+        }
+
+        String message;
+
+        if (result) {
+            message = "추천 완료";
+        } else {
+            message = "추천 취소 완료";
+        }
+
+        LikeRes oneLikeRes = LikeRes.builder()
+                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .message(message)
+                .details(result)
+                .build();
+        return new ResponseEntity<>(oneLikeRes, HttpStatus.OK);
     }
 }

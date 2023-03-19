@@ -82,4 +82,12 @@ public class Post extends BaseTimeEntity {
         this.writer = writer;
         writer.addCourse(this);
     }
+
+    public void addLikes(Likes likes) {
+        this.likesList.add(likes);
+    }
+
+    public void updateLikes(Integer likes) {
+        this.likes += likes;
+    }
 }

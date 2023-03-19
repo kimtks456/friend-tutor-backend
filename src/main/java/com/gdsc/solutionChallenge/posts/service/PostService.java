@@ -4,6 +4,7 @@ package com.gdsc.solutionChallenge.posts.service;
 import com.gdsc.solutionChallenge.global.utils.SecurityUtil;
 import com.gdsc.solutionChallenge.member.entity.Member;
 import com.gdsc.solutionChallenge.member.repository.MemberRepository;
+import com.gdsc.solutionChallenge.posts.Score;
 import com.gdsc.solutionChallenge.posts.dto.req.PostSaveDto;
 import com.gdsc.solutionChallenge.posts.dto.res.FullPost;
 import com.gdsc.solutionChallenge.posts.dto.res.SummPost;
@@ -43,7 +44,7 @@ public class PostService {
 
         Post savedPost = postRepository.save(post);
         Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).get();
-        member.addScore(10);
+        member.updateScore(Score.post.getScore());
         memberRepository.save(member);
 
         return SummPost.builder()
@@ -132,6 +133,29 @@ public class PostService {
 
     public List<String> getSubjects() {
         return SUBJECTS;
+    }
+
+    public boolean likePost(Long courseId) {
+        Post post = postRepository.findById(courseId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).get();
+        Likes likes = likesRepository.findByPostIdAndMemberId(courseId, member.getId()).orElse(null);
+
+        if (likes == null) {
+            likes.confirmMemberPost(member, post);
+            member.updateScore(Score.like.getScore());
+            post.updateLikes(1);
+            likesRepository.save(likes);
+            postRepository.save(post);
+            memberRepository.save(member);
+            return true;
+        } else {
+            likesRepository.delete(likes);
+            member.updateScore(Score.dislike.getScore());
+            post.updateLikes(-1);
+            memberRepository.save(member);
+            postRepository.save(post);
+            return false;
+        }
     }
 
 //    public String getSubjectRegExp() {

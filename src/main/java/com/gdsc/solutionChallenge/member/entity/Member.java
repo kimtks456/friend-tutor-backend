@@ -5,6 +5,7 @@ import static jakarta.persistence.CascadeType.ALL;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gdsc.solutionChallenge.global.config.AES;
 import com.gdsc.solutionChallenge.global.utils.EmailConverter;
+import com.gdsc.solutionChallenge.posts.Score;
 import com.gdsc.solutionChallenge.posts.entity.Likes;
 import com.gdsc.solutionChallenge.posts.entity.Post;
 import jakarta.persistence.Column;
@@ -131,7 +132,11 @@ public class Member extends BaseTimeEntity implements UserDetails {
         this.postList.add(post);
     }
 
-    public void addScore(Integer score){
+    public void addLikes(Likes likes){
+        this.likesList.add(likes);
+    }
+
+    public void updateScore(Integer score){
         this.score += score;
     }
 
