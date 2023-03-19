@@ -10,5 +10,5 @@ import lombok.Data;
 public class AllMembersRes {
     private String time;
     private String message;
-    private List<Member> details;
+    private List<MemberInfo> details;
 }

@@ -57,11 +57,11 @@ public class MemberController {
     @GetMapping("/all")
     @Operation(summary = "[TEST] 모든 유저 조회", description = "모든 유저의 정보를 조회합니다.")
     public ResponseEntity<?> getAllUser() {
-        List<Member> members = memberService.getAllUser();
+        List<MemberInfo> memberInfos = memberService.getAllUser();
 
         return new ResponseEntity<>(AllMembersRes.builder()
                 .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .details(members)
+                .details(memberInfos)
                 .build(), HttpStatus.OK);
     }
 

@@ -9,6 +9,7 @@ import com.gdsc.solutionChallenge.member.entity.Member;
 import com.gdsc.solutionChallenge.member.repository.MemberRepository;
 import com.gdsc.solutionChallenge.posts.entity.Post;
 import io.swagger.v3.oas.annotations.servers.Server;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -90,9 +91,21 @@ public class MemberService {
                 .build();
     }
 
-    public List<Member> getAllUser() {
+    public List<MemberInfo> getAllUser() {
         List<Member> members = memberRepository.findAll();
+        List<MemberInfo> memberInfos = new ArrayList<>();
 
-        return members;
+        for (Member member : members) {
+            memberInfos.add(MemberInfo.builder()
+                    .member_id(member.getId())
+                    .username(member.getUsername())
+                    .name(member.getName())
+                    .nickName(member.getNickName())
+                    .grade(member.getGrade())
+                    .email(member.getEmail())
+                    .score(member.getScore())
+                    .build());
+        }
+        return memberInfos;
     }
 }
