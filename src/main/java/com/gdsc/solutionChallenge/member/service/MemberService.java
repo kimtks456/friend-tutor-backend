@@ -7,8 +7,6 @@ import com.gdsc.solutionChallenge.member.dto.SignUpDto;
 import com.gdsc.solutionChallenge.member.dto.TokenInfo;
 import com.gdsc.solutionChallenge.member.entity.Member;
 import com.gdsc.solutionChallenge.member.repository.MemberRepository;
-import com.gdsc.solutionChallenge.posts.entity.Post;
-import io.swagger.v3.oas.annotations.servers.Server;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
