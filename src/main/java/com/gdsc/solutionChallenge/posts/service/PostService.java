@@ -160,6 +160,28 @@ public class PostService {
         }
     }
 
+    public List<SummPost> getMyLikePosts() {
+        Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).get();
+        List<Likes> likes = likesRepository.findAllByMemberId(member.getId());
+
+        if (likes.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<SummPost> summPosts = new ArrayList<>();
+        for (Likes like : likes) {
+            Post post = postRepository.findById(like.getPost().getId()).get();
+            summPosts.add(SummPost.builder()
+                    .course_id(post.getId())
+                    .writer(post.getWriter().getNickName())
+                    .title(post.getTitle())
+                    .video_id(post.getVideo_id())
+                    .likes(post.getLikes())
+                    .build());
+        }
+        return summPosts;
+    }
+
 //    public String getSubjectRegExp() {
 //        return SUBJECTS.stream()
 //                .map(s -> "(" + s + ")")

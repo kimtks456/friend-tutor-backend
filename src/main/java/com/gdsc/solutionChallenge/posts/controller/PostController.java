@@ -207,4 +207,26 @@ public class PostController {
                 .build();
         return new ResponseEntity<>(oneLikeRes, HttpStatus.OK);
     }
+
+    @GetMapping("/like/mine")
+    @Operation(summary = "[TEST] 내가 추천한 강의글 조회", description = "내가 추천한 강의글의 요약정보를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "조회 성공 : 내가 추천한 강의글의 요약정보를 details에 배열로 담아 보냅니다.", content = @Content(schema = @Schema(implementation = ListSummPostsRes.class))),
+            @ApiResponse(responseCode = "406", description = "조회 실패 : 로직 에러 발생.", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
+    public ResponseEntity<?> getMyLikePosts() {
+        List<SummPost> result;
+        try {
+            result = postService.getMyLikePosts();
+        } catch (Exception e) {
+            throw new PostException(e.getMessage());
+        }
+
+        ListSummPostsRes listSummPostsRes = ListSummPostsRes.builder()
+                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .message("내가 추천한 강의글 조회 성공")
+                .details(result)
+                .build();
+        return new ResponseEntity<>(listSummPostsRes, HttpStatus.OK);
+    }
+
 }
