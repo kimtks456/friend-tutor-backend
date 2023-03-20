@@ -47,13 +47,6 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-
-    @GetMapping
-    @Operation(summary = "[TEST] BE 연결 테스트", description = "정상적으로 BE와 연결되면, '성공' 이라는 String 반환")
-    public String test() {
-        return "성공";
-    }
-
     @GetMapping("/all")
     @Operation(summary = "[TEST] 모든 유저 조회", description = "모든 유저의 정보를 조회합니다.")
     public ResponseEntity<?> getAllUser() {
