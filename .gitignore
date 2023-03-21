@@ -42,4 +42,5 @@ out/
 
 ### For Security ###
 application-secure.properties
+keystore_copy.p12
 

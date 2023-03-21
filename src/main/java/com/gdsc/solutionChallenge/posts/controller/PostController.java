@@ -68,27 +68,27 @@ public class PostController {
         return new ResponseEntity<>(uploadRes, HttpStatus.OK);
     }
 
-    @GetMapping("/all")
-    @Operation(summary = "[TEST] 모든 강의글의 상세정보 조회", description = "모든 강의글의 상세정보를 조회합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "모든 강의글 조회 성공 : 모든 강의글들을 details에 배열로 담아 보냅니다.", content = @Content(schema = @Schema(implementation = AllFullPostsRes.class))),
-            @ApiResponse(responseCode = "406", description = "모든 강의글 조회 실패 : 조회된 게시물이 하나도 없는 경우.", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
-    public ResponseEntity<?> getAllFullPosts() {
-        List<FullPost> result;
-        try {
-            result = postService.getAllPosts();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new PostException(e.getMessage());
-        }
-
-        AllFullPostsRes allFullPostsRes = AllFullPostsRes.builder()
-                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .message("모든 강의글 전체정보 조회 성공")
-                .details(result)
-                .build();
-        return new ResponseEntity<>(allFullPostsRes, HttpStatus.OK);
-    }
+//    @GetMapping("/all")
+//    @Operation(summary = "[TEST] 모든 강의글의 상세정보 조회", description = "모든 강의글의 상세정보를 조회합니다.")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "모든 강의글 조회 성공 : 모든 강의글들을 details에 배열로 담아 보냅니다.", content = @Content(schema = @Schema(implementation = AllFullPostsRes.class))),
+//            @ApiResponse(responseCode = "406", description = "모든 강의글 조회 실패 : 조회된 게시물이 하나도 없는 경우.", content = @Content(schema = @Schema(implementation = ResponseForm.class)))})
+//    public ResponseEntity<?> getAllFullPosts() {
+//        List<FullPost> result;
+//        try {
+//            result = postService.getAllPosts();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new PostException(e.getMessage());
+//        }
+//
+//        AllFullPostsRes allFullPostsRes = AllFullPostsRes.builder()
+//                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+//                .message("모든 강의글 전체정보 조회 성공")
+//                .details(result)
+//                .build();
+//        return new ResponseEntity<>(allFullPostsRes, HttpStatus.OK);
+//    }
 
     @GetMapping("/{course_id}")
     @Operation(summary = "강의글 하나 조회", description = "해당 강의글의 상세정보를 조회합니다.")
