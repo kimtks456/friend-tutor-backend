@@ -1,1 +1,3 @@
-# GDSC_2023_SolutionChallenge BE
+# GDSC_2023_SolutionChallenge_BE
+
+## Friend Tutor
