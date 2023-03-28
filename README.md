@@ -10,10 +10,10 @@ This is the backend server for the **[Friend Tutor](https://github.com/2ood/frie
 ## ✨ Functionality
 
 
-- <u>**Authentication</u> :** Supports user registration and login using JWT, and most of the APIs require authentication, so an access token should be attached to the Authorization header.
-- <u>**Certification</u> :** Users who have actively participated in mentor activities can receive a certificate of recognition.
-- <u>**Posts</u> :** Users can upload and browse lectures, as well as view the most recent or most recommended lectures. In addition, the system provides the functionality to like or unlike a lecture post.
-- <u>**API docs</u> :** Provides API documentation using Swagger. However, it is recommended to use browser-based translation as the documentation is written in Korean.
+- <U>**Authentication</U> :** Supports user registration and login using JWT, and most of the APIs require authentication, so an access token should be attached to the Authorization header.
+- <U>**Certification</U> :** Users who have actively participated in mentor activities can receive a certificate of recognition.
+- <U>**Posts</U> :** Users can upload and browse lectures, as well as view the most recent or most recommended lectures. In addition, the system provides the functionality to like or unlike a lecture post.
+- <U>**API docs</U> :** Provides API documentation using Swagger. However, it is recommended to use browser-based translation as the documentation is written in Korean.
 
 ## 🔧 How to Setup
 
