@@ -47,23 +47,16 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-
-    @GetMapping
-    @Operation(summary = "[TEST] BE 연결 테스트", description = "정상적으로 BE와 연결되면, '성공' 이라는 String 반환")
-    public String test() {
-        return "성공";
-    }
-
-    @GetMapping("/all")
-    @Operation(summary = "[TEST] 모든 유저 조회", description = "모든 유저의 정보를 조회합니다.")
-    public ResponseEntity<?> getAllUser() {
-        List<MemberInfo> memberInfos = memberService.getAllUser();
-
-        return new ResponseEntity<>(AllMembersRes.builder()
-                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .details(memberInfos)
-                .build(), HttpStatus.OK);
-    }
+//    @GetMapping("/all")
+//    @Operation(summary = "[TEST] 모든 유저 조회", description = "모든 유저의 정보를 조회합니다.")
+//    public ResponseEntity<?> getAllUser() {
+//        List<MemberInfo> memberInfos = memberService.getAllUser();
+//
+//        return new ResponseEntity<>(AllMembersRes.builder()
+//                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+//                .details(memberInfos)
+//                .build(), HttpStatus.OK);
+//    }
 
     @GetMapping("/info")
     @Operation(summary = "사용자 정보 조회", description = "PW 제외한, 사용자 정보를 조회합니다.")
