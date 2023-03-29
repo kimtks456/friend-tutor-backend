@@ -24,7 +24,7 @@ In the 2023 GDSC Solution Challenge, GCP credit and a free domain were provided,
 
 The frontend is deployed on Netlify and is receiving the API using the above domain.
 
-- **Frontend domain :** [https://friends-mentor.netlify.app](https://friends-mentor.netlify.app/)
+- **Frontend domain :** [https://friends-tutor.netlify.app](https://friends-tutor.netlify.app/)
 
 
 ## 🔧 How to Setup
