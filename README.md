@@ -50,7 +50,7 @@ If Docker is not available, you can set up the backend environment directly by f
 
 You can run MySQL and Spring server by following these steps:
 
-1. Clone the backend source code from the repository.
+1. Clone the source code of the `demo` branch.
 2. Create a new database named `lms`.
 3. Navigate to the project directory and update the MySQL username and password in the `application-demo.properties` file. And grant privilege access to the user for the `lms` DB.
 4. Run MySQL in background.
