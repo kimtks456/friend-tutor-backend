@@ -1,11 +1,11 @@
-# Backend for [Friend Tutor](https://github.com/2ood/friend-mentor-frontend)
+# Backend for [Friend Tutor](https://github.com/GDSC-GIST/friends-tutor)
 
 
 ## 🤓 Overview
 
 
 
-This is the backend server for the **[Friend Tutor](https://github.com/2ood/friend-mentor-frontend)** project, built under the [Google Developer Student Club - GIST](https://gdsc.community.dev/gwangju-institute-of-science-and-technology/). It provides real-time functionalities based on REST API for user registration, login, and browsing of posts. The architecture is running Spring and MySQL simultaneously on a single VM instance in GCP.
+This is the backend server for the **[Friend Tutor](https://github.com/GDSC-GIST/friends-tutor)** project, built under the [Google Developer Student Club - GIST](https://gdsc.community.dev/gwangju-institute-of-science-and-technology/). It provides real-time functionalities based on REST API for user registration, login, and browsing of posts. The architecture is running Spring and MySQL simultaneously on a single VM instance in GCP.
 
 ## ✨ Functionality
 
